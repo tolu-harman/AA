@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="12" height="25" viewBox="0 0 12 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon/Navigation_Battery_87" clip-path="url(#clip0_0_880)">
+<path id="Union" d="M9 3.5C10.3807 3.5 11.5 4.61929 11.5 6V22C11.5 23.3807 10.3807 24.5 9 24.5H3C1.61929 24.5 0.5 23.3807 0.5 22V6C0.5 4.61929 1.61929 3.5 3 3.5H9ZM3 4.5C2.17157 4.5 1.5 5.17157 1.5 6V22C1.5 22.8284 2.17157 23.5 3 23.5H9C9.82843 23.5 10.5 22.8284 10.5 22V6C10.5 5.17157 9.82843 4.5 9 4.5H3ZM8 0.5C8.27614 0.5 8.5 0.723858 8.5 1C8.5 1.27614 8.27614 1.5 8 1.5H4C3.72386 1.5 3.5 1.27614 3.5 1C3.5 0.723858 3.72386 0.5 4 0.5H8Z" fill="#121C25"/>
+<path id="Rectangle 3" d="M3 9C3 8.44772 3.44772 8 4 8H8C8.55228 8 9 8.44772 9 9V21C9 21.5523 8.55228 22 8 22H4C3.44772 22 3 21.5523 3 21V9Z" fill="#121C25"/>
+</g>
+<defs>
+<clipPath id="clip0_0_880">
+<rect width="12" height="25" fill="white"/>
+</clipPath>
+</defs>
+</svg>
