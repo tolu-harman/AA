@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>PerL Pro 2 · Device Home</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #121c25;
+      --ink-strong: #0b131a;
+      --ink-muted: #515b66;
+      --surface: #ffffff;
+      --surface-soft: #f2f4f5;
+      --highlight: #ed4d33;
+      --orange-start: #fa7250;
+      --orange-end: #f63000;
+      --font: "Usual", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --device-scale: 1;
+      font-family: var(--font);
+      color: var(--ink);
+      background: #e9ebed;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { width: 100%; height: 100%; margin: 0; }
+
+    body {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 38%, #f8f9fa 0%, #e9ebed 74%);
+    }
+
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .device-stage {
+      position: relative;
+      width: 375px;
+      height: 1296px;
+    }
+
+    .device-shell {
+      position: relative;
+      width: 375px;
+      height: 1296px;
+      overflow: hidden;
+      border-radius: 48px;
+      background: var(--surface);
+      box-shadow: 0 30px 90px rgba(21, 28, 35, .2), 0 4px 18px rgba(21, 28, 35, .08);
+      isolation: isolate;
+      transform: scale(var(--device-scale));
+      transform-origin: top left;
+    }
+
+    .screen-scroll {
+      position: absolute;
+      inset: 0 0 114px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding-top: 52px;
+      padding-bottom: 18px;
+      scrollbar-width: none;
+      overscroll-behavior: contain;
+    }
+
+    .screen-scroll::-webkit-scrollbar { display: none; }
+
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      width: 375px;
+    }
+
+    .device-title-row {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) 24px;
+      align-items: center;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    .device-title {
+      margin: 0;
+      color: #181818;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -.18px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .icon-button {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .icon-button:hover { background: rgba(18, 28, 37, .06); }
+    .icon-button:focus-visible, .tab:focus-visible, .mode-button:focus-visible,
+    .switch:focus-visible, .feature-card:focus-visible, .close-button:focus-visible {
+      outline: 2px solid #426bff;
+      outline-offset: 3px;
+    }
+
+    .asset-icon { display: block; max-width: none; flex: none; }
+
+    .product-slot {
+      position: relative;
+      width: 375px;
+      height: 143px;
+      overflow: hidden;
+    }
+
+    .buds-composite {
+      position: absolute;
+      top: 14.18px;
+      left: calc(50% - 1.08px);
+      width: 209.436px;
+      height: 114.568px;
+      transform: translateX(-50%);
+    }
+
+    .bud-panel {
+      position: absolute;
+      top: 6.82px;
+      width: 107px;
+      height: 115px;
+    }
+
+    .bud-panel.left { left: 0; }
+    .bud-panel.right { left: 107px; width: 102px; }
+
+    .bud-shadow {
+      position: absolute;
+      top: calc(50% + 47.5px);
+      width: 49.155px;
+      height: 3.638px;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .bud-panel.left .bud-shadow { left: calc(50% - 48.495px); }
+    .bud-panel.right .bud-shadow { left: calc(50% - .78px); }
+
+    .bud-shadow img {
+      position: absolute;
+      top: -9.017px;
+      left: -9.017px;
+      display: block;
+      max-width: none;
+    }
+
+    .bud-crop {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      overflow: hidden;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    .bud-panel.left .bud-crop {
+      width: 107.486px;
+      height: 104px;
+      left: calc(50% + .24px);
+      top: calc(50% - 5.5px);
+    }
+
+    .bud-panel.right .bud-crop {
+      width: 102.796px;
+      height: 103.181px;
+      left: calc(50% + .04px);
+      top: calc(50% - 5.91px);
+    }
+
+    .bud-crop img {
+      position: absolute;
+      top: -47.86%;
+      display: block;
+      max-width: none;
+      height: 195.33%;
+    }
+
+    .bud-panel.left .bud-crop img { left: 1.81%; width: 189%; }
+    .bud-panel.right .bud-crop img { left: -94.19%; width: 196.06%; }
+
+    .battery-levels {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 42px;
+      width: 375px;
+      padding: 8px 6px;
+    }
+
+    .battery-column {
+      display: flex;
+      flex: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .battery-column.bud { width: 50px; }
+    .battery-column.case { width: 73px; }
+
+    .battery-glyph-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 12px;
+    }
+
+    .battery-glyph-frame img { transform: rotate(90deg); }
+
+    .battery-value {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .battery-value strong { font-weight: 600; }
+    .battery-value .asset-icon { margin-left: -4px; }
+
+    .screen-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+      margin-top: 24px;
+      padding: 0 24px;
+    }
+
+    .noise-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 327px;
+      padding: 16px 16px 20px;
+      border-radius: 32px;
+      background: var(--surface-soft);
+      transition: background-color .2s ease;
+    }
+
+    .noise-card.is-off {
+      gap: 0;
+      padding-bottom: 16px;
+    }
+
+    .noise-card.is-off .noise-modes,
+    .noise-card.is-off .noise-description,
+    .noise-card.is-off .noise-slider,
+    .noise-card.is-off .adaptive-row { display: none; }
+
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 295px;
+      min-height: 48px;
+      padding: 8px 0 8px 8px;
+    }
+
+    .section-title-row h2 {
+      margin: 0;
+      color: var(--ink-strong);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+      opacity: .9;
+    }
+
+    .switch {
+      position: relative;
+      flex: none;
+      width: 52px;
+      height: 32px;
+      padding: 0;
+      border: 1.5px solid transparent;
+      border-radius: 100px;
+      background: var(--ink);
+      cursor: pointer;
+      transition: background-color .18s ease;
+    }
+
+    .switch[aria-checked="false"] {
+      border-color: var(--ink);
+      background: var(--surface);
+    }
+
+    .switch-thumb {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 27px;
+      height: 24px;
+      border-radius: 23px;
+      background: var(--surface);
+      transition: transform .18s ease;
+    }
+
+    .switch[aria-checked="false"] .switch-thumb {
+      left: 3px;
+      right: auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ink);
+      transform: none;
+    }
+
+    .noise-modes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      width: 295px;
+    }
+
+    .mode-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 80px;
+      padding: 0;
+      border: 0;
+      border-radius: 32px;
+      color: var(--ink-strong);
+      background: var(--surface);
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, transform .15s ease;
+    }
+
+    .mode-button:hover { transform: translateY(-1px); }
+
+    .mode-button[aria-pressed="true"] {
+      gap: 4px;
+      color: #fff;
+      background: linear-gradient(117deg, var(--orange-start) 3.4%, var(--orange-end) 131.37%);
+    }
+
+    .mode-button[aria-pressed="true"] .active-light { filter: brightness(0) invert(1); }
+
+    .mode-button span {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .noise-description {
+      min-height: 31px;
+      padding: 4px 8px;
+      color: var(--ink-strong);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.3;
+      transition: opacity .18s ease;
+    }
+
+    .noise-slider {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 295px;
+      padding-bottom: 16px;
+    }
+
+    .slider-track {
+      position: relative;
+      width: 295px;
+      height: 45px;
+      overflow: hidden;
+      border-radius: 30px;
+      background: var(--surface);
+      touch-action: pan-y;
+    }
+
+    .slider-dots {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      pointer-events: none;
+    }
+
+    .slider-dots img {
+      display: block;
+      max-width: none;
+    }
+
+    .slider-fill {
+      position: absolute;
+      top: 50%;
+      left: 5.82px;
+      width: 35px;
+      height: 35px;
+      border-radius: 17.5px;
+      background: linear-gradient(140.6deg, rgba(250, 114, 80, .5) 3.4%, rgba(246, 48, 0, .5) 131.37%);
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: width .24s cubic-bezier(.22, .61, .36, 1), border-color .18s ease-out;
+    }
+
+    .slider-track[data-state="active"] .slider-fill {
+      border: 3px solid rgba(242, 72, 55, .3);
+    }
+
+    .slider-knob {
+      position: absolute;
+      top: 50%;
+      left: 5.82px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: var(--highlight);
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: left .24s cubic-bezier(.22, .61, .36, 1);
+    }
+
+    .slider-track[data-state="active"] .slider-fill,
+    .slider-track[data-state="active"] .slider-knob { transition: none; }
+
+    .slider-input {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      z-index: 2;
+      width: calc(100% - 12px);
+      height: 45px;
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .slider-input::-webkit-slider-runnable-track { height: 45px; background: transparent; }
+    .slider-input::-webkit-slider-thumb { width: 35px; height: 35px; appearance: none; -webkit-appearance: none; }
+    .slider-input::-moz-range-track { height: 45px; background: transparent; }
+    .slider-input::-moz-range-thumb { width: 35px; height: 35px; border: 0; }
+
+    .slider-track:has(.slider-input:focus-visible) .slider-knob { outline: 2px solid rgba(237, 77, 51, .45); outline-offset: 3px; }
+    .noise-slider[aria-disabled="true"] .slider-input { cursor: not-allowed; }
+
+    .slider-labels {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 295px;
+      padding: 0 10px;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .slider-labels span { flex: 1; opacity: .75; }
+    .slider-labels span:nth-child(2) { text-align: center; }
+    .slider-labels span:last-child { text-align: right; }
+
+    .adaptive-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 295px;
+      min-height: 48px;
+      padding: 8px 0 8px 8px;
+    }
+
+    .adaptive-row p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 327px;
+      padding-bottom: 8px;
+    }
+
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      width: 159px;
+      height: 140px;
+      padding: 24px;
+      border: 0;
+      border-radius: 32px;
+      color: var(--ink);
+      background: var(--surface-soft);
+      text-align: left;
+      cursor: pointer;
+      transition: transform .16s ease, background-color .16s ease;
+    }
+
+    .feature-card:hover { transform: translateY(-2px); background: #eceff1; }
+
+    .feature-card-inner {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .feature-copy { display: flex; flex-direction: column; gap: 8px; width: 111px; }
+
+    .feature-name {
+      margin: 0;
+      color: #323b43;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .feature-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 111px;
+      min-height: 20px;
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink-muted);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.4;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .bottom-navigation {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      width: 375px;
+      height: 114px;
+      border-radius: 40px 40px 0 0;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 -20px 15px rgba(145, 145, 145, .10);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 80px;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    .tab {
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 64px;
+      min-width: 0;
+      padding: 0 0 4px;
+      border: 0;
+      border-radius: 40px;
+      color: #171a20;
+      background: transparent;
+      cursor: pointer;
+      opacity: .87;
+    }
+
+    .tab[aria-current="page"] {
+      color: #fff;
+      background: var(--ink);
+      opacity: 1;
+    }
+
+    .tab-label { font-size: 14px; font-weight: 400; line-height: 1; opacity: .9; }
+    .tab[aria-current="page"] .tab-label { font-weight: 600; }
+
+    .home-indicator-area {
+      position: relative;
+      width: 100%;
+      height: 34px;
+    }
+
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      width: 144px;
+      height: 5px;
+      border-radius: 100px;
+      background: #000;
+      transform: translateX(-50%);
+    }
+
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      width: 375px;
+      height: 44px;
+      background: rgba(255, 255, 255, .95);
+      -webkit-backdrop-filter: blur(32px);
+      backdrop-filter: blur(32px);
+    }
+
+    .status-time {
+      position: absolute;
+      top: 7.33px;
+      left: 21px;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 21px;
+      color: var(--ink-strong);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -.3px;
+      line-height: 1;
+    }
+
+    .status-battery, .status-wifi, .status-cellular { position: absolute; display: block; max-width: none; }
+    .status-battery { top: 17.33px; right: 14.34px; }
+    .status-wifi { top: 17px; right: 43.67px; }
+    .status-cellular { top: 17px; right: 64px; }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: rgba(11, 19, 26, .28);
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-backdrop[hidden] { display: none; }
+
+    .detail-dialog {
+      width: 100%;
+      max-width: 319px;
+      padding: 24px;
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: 0 18px 48px rgba(11, 19, 26, .2);
+      animation: modal-in .18s ease-out;
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(8px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .dialog-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .dialog-top h2 { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.25; }
+    .dialog-copy { margin: 16px 0 0; color: var(--ink-muted); font-size: 14px; line-height: 1.5; }
+    .dialog-status { margin: 8px 0 0; color: var(--highlight); font-size: 13px; font-weight: 600; }
+
+    .close-button {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--surface-soft);
+      font-size: 21px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @media (max-width: 520px) and (hover: none) and (pointer: coarse) {
+      body { display: block; background: var(--surface); }
+      .device-stage { width: min(375px, 100vw); height: 100dvh; transform: none; }
+      .device-shell { width: 100%; height: 100%; border-radius: min(48px, 12vw); }
+      .screen-scroll, .top-section, .product-slot, .battery-levels, .bottom-navigation,
+      .status-bar { width: 100%; }
+      .screen-wrapper { padding-right: 24px; padding-left: 24px; }
+      .noise-card, .feature-grid { width: min(327px, calc(100vw - 48px)); }
+      .section-title-row, .noise-modes, .noise-slider, .slider-track, .slider-labels, .adaptive-row { width: 100%; }
+      .feature-card { width: 100%; }
+      .battery-levels { gap: clamp(16px, 11.2vw, 42px); }
+      .status-bar { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="device-stage" id="deviceStage">
+    <main class="device-shell" aria-label="PerL Pro 2 device home">
+      <div class="screen-scroll" id="screenScroll">
+        <div class="top-section">
+          <header class="device-title-row" data-node-id="I2041:34597;13708:72098">
+            <button class="icon-button" type="button" data-modal-title="My devices" data-modal-copy="PerL Pro 2 is connected and ready to use." aria-label="Open device list">
+              <img class="asset-icon" src="assets/c1955.svg" alt="" data-node-id="2041:34093">
+            </button>
+            <h1 class="device-title" data-node-id="I2041:34597;13708:72102">PerL Pro 2</h1>
+            <button class="icon-button" type="button" data-modal-title="PerL Pro 2" data-modal-copy="Your headphones are connected. Use the controls on this screen to adjust listening modes and device features." aria-label="About PerL Pro 2">
+              <img class="asset-icon" src="assets/a4f42.svg" alt="" data-node-id="1401:1824">
+            </button>
+          </header>
+
+          <div class="product-slot" aria-label="Black PerL Pro 2 earbuds">
+            <div class="buds-composite" data-node-id="2041:34150">
+              <div class="bud-panel left">
+                <div class="bud-shadow" aria-hidden="true"><img src="assets/50a5e.svg" alt="" data-node-id="2041:34154"></div>
+                <div class="bud-crop"><img src="assets/595aa.png" alt="" data-node-id="2041:34155"></div>
+              </div>
+              <div class="bud-panel right">
+                <div class="bud-shadow" aria-hidden="true"><img src="assets/50a5e.svg" alt="" data-node-id="2041:34157"></div>
+                <div class="bud-crop"><img src="assets/595aa.png" alt=""></div>
+              </div>
+            </div>
+          </div>
+
+          <section class="battery-levels" aria-label="Battery levels">
+            <div class="battery-column bud">
+              <div class="battery-glyph-frame"><img class="asset-icon" id="leftBatteryIcon" src="assets/7fb8d.svg" alt="" data-off-src="assets/fc3f2.svg" data-node-id="I2041:34597;14283:69589;13708:75261"></div>
+              <div class="battery-value"><strong>L</strong><span>18%</span></div>
+            </div>
+            <div class="battery-column case">
+              <div class="battery-glyph-frame"><img class="asset-icon" src="assets/983e9.svg" alt="" data-node-id="I2041:34597;14283:69589;13708:75243"></div>
+              <div class="battery-value"><img class="asset-icon" src="assets/544bb.svg" alt="" data-node-id="2041:34313"><span>43%</span></div>
+            </div>
+            <div class="battery-column bud">
+              <div class="battery-glyph-frame"><img class="asset-icon" src="assets/19e6e.svg" alt="" data-node-id="I2041:34597;14283:69589;13708:75225"></div>
+              <div class="battery-value"><strong>R</strong><span>81%</span></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="screen-wrapper">
+          <section class="noise-card" id="noiseCard" data-node-id="I2041:34597;16121:66691" aria-labelledby="noiseTitle">
+            <div class="section-title-row">
+              <h2 id="noiseTitle">Noise control</h2>
+              <button class="switch" id="noisePower" type="button" role="switch" aria-checked="true" aria-label="Noise control">
+                <span class="switch-thumb"></span>
+              </button>
+            </div>
+
+            <div class="noise-modes" role="group" aria-label="Noise control mode">
+              <button class="mode-button" type="button" data-mode="Focus" aria-pressed="true">
+                <img class="asset-icon" src="assets/4b681.svg" alt="" data-node-id="2041:34369">
+                <span>Focus</span>
+              </button>
+              <button class="mode-button" type="button" data-mode="Aware" aria-pressed="false">
+                <img class="asset-icon" src="assets/84933.svg" alt="" data-node-id="2041:34346">
+                <span>Aware</span>
+              </button>
+              <button class="mode-button" type="button" data-mode="Voice" aria-pressed="false">
+                <img class="asset-icon" src="assets/ae820.svg" alt="" data-node-id="2041:34349">
+                <span>Voice</span>
+              </button>
+            </div>
+
+            <div class="noise-description" id="noiseDescription" aria-live="polite">Reduces unwanted background noise to create a quieter listening environment.</div>
+
+            <div class="noise-slider" id="noiseSlider">
+              <div class="slider-track" id="sliderTrack" data-state="default">
+                <div class="slider-dots" aria-hidden="true">
+                  <img src="assets/6dca4.svg" alt="">
+                  <img src="assets/6dca4.svg" alt="">
+                  <img src="assets/6dca4.svg" alt="">
+                  <img src="assets/6dca4.svg" alt="">
+                  <img src="assets/6dca4.svg" alt="">
+                </div>
+                <div class="slider-fill" id="sliderFill" aria-hidden="true" data-node-id="I2045:9879;6909:47946"></div>
+                <div class="slider-knob" id="sliderKnob" aria-hidden="true" data-node-id="I2045:9879;6909:47947"></div>
+                <input class="slider-input" id="noiseLevel" type="range" min="0" max="100" step="1" value="0" aria-label="Noise reduction strength" aria-valuetext="Low">
+              </div>
+              <div class="slider-labels" aria-hidden="true"><span>Low</span><span>Medium</span><span>High</span></div>
+            </div>
+
+            <div class="adaptive-row">
+              <p>Adaptive ANC</p>
+              <button class="switch" id="adaptivePower" type="button" role="switch" aria-checked="true" aria-label="Adaptive ANC">
+                <span class="switch-thumb"></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="feature-grid" aria-label="Device features">
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71843" data-feature="Spatial audio" data-status="Available" data-detail="Spatial audio is available on your PerL Pro 2. Explore immersive listening in a supported app.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-copy"><span class="feature-name">Spatial audio</span><span class="feature-status">Available</span></span>
+              </span>
+            </button>
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71844" data-feature="Equaliser" data-status="Unavailable" data-detail="Equaliser controls are unavailable for this connected device right now.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/a8c37.svg" alt="" data-node-id="13211:73655">
+                <span class="feature-copy"><span class="feature-name">Equaliser</span><span class="feature-status">Unavailable <img class="asset-icon" src="assets/5a03b.svg" alt="" data-node-id="13211:73660"></span></span>
+              </span>
+            </button>
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71845" data-feature="Auracast" data-status="Not connected" data-detail="Connect to an Auracast broadcast to share audio with nearby compatible devices.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/a16c8.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-copy"><span class="feature-name">Auracast</span><span class="feature-status">Not connected</span></span>
+              </span>
+            </button>
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71846" data-feature="Connections" data-status="Ruby’s iPhone..." data-detail="PerL Pro 2 is connected to Ruby’s iPhone. Manage paired devices from Settings.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/1460c.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-copy"><span class="feature-name">Connections</span><span class="feature-status">Ruby’s iPhone...</span></span>
+              </span>
+            </button>
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71847" data-feature="Touch controls" data-status="Off" data-detail="Touch controls are currently off. Turn them on in the full device settings to use touch gestures.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/295b4.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-copy"><span class="feature-name">Touch controls</span><span class="feature-status">Off</span></span>
+              </span>
+            </button>
+            <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71848" data-feature="Sleep timer" data-status="Off" data-detail="A sleep timer can pause playback after you fall asleep. The timer is currently off.">
+              <span class="feature-card-inner">
+                <img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-copy"><span class="feature-name">Sleep timer</span><span class="feature-status">Off</span></span>
+              </span>
+            </button>
+          </section>
+        </div>
+      </div>
+
+      <nav class="bottom-navigation" aria-label="Primary navigation" data-node-id="I2041:34597;13708:71849">
+        <div class="nav-bar">
+          <button class="tab" type="button" data-tab="Home" aria-current="page">
+            <img class="asset-icon" src="assets/72cf3.svg" alt="" data-node-id="3442:48667">
+            <span class="tab-label">Home</span>
+          </button>
+          <button class="tab" type="button" data-tab="Profile" aria-current="false">
+            <img class="asset-icon" src="assets/37c36.svg" alt="" data-node-id="7422:48620">
+            <span class="tab-label">Profile</span>
+          </button>
+          <button class="tab" type="button" data-tab="Settings" aria-current="false">
+            <img class="asset-icon" src="assets/5e4e7.svg" alt="" data-node-id="1401:1952">
+            <span class="tab-label">Settings</span>
+          </button>
+        </div>
+        <div class="home-indicator-area" aria-hidden="true"><span class="home-indicator"></span></div>
+      </nav>
+
+      <div class="status-bar" aria-hidden="true" data-node-id="I2041:34597;13708:71852">
+        <span class="status-time">9:41</span>
+        <img class="status-cellular" src="assets/191eb.svg" alt="" data-node-id="3:12362">
+        <img class="status-wifi" src="assets/9e59b.svg" alt="" data-node-id="3:12358">
+        <img class="status-battery" src="assets/434e0.svg" alt="" data-node-id="3:12354">
+      </div>
+
+      <div class="modal-backdrop" id="modalBackdrop" hidden>
+        <section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogCopy">
+          <div class="dialog-top">
+            <h2 id="dialogTitle"></h2>
+            <button class="close-button" id="closeDialog" type="button" aria-label="Close">×</button>
+          </div>
+          <p class="dialog-status" id="dialogStatus" hidden></p>
+          <p class="dialog-copy" id="dialogCopy"></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var modeDescriptions = {
+        Focus: "Reduces unwanted background noise to create a quieter listening environment.",
+        Aware: "Lets you hear the sounds around you while keeping your audio clear.",
+        Voice: "Helps bring nearby voices forward while you listen."
+      };
+      var modeButtons = Array.from(document.querySelectorAll(".mode-button"));
+      var noiseCard = document.getElementById("noiseCard");
+      var noisePower = document.getElementById("noisePower");
+      var adaptivePower = document.getElementById("adaptivePower");
+      var noiseDescription = document.getElementById("noiseDescription");
+      var noiseSlider = document.getElementById("noiseSlider");
+      var noiseLevel = document.getElementById("noiseLevel");
+      var sliderTrack = document.getElementById("sliderTrack");
+      var leftBatteryIcon = document.getElementById("leftBatteryIcon");
+      var modalBackdrop = document.getElementById("modalBackdrop");
+      var dialogTitle = document.getElementById("dialogTitle");
+      var dialogCopy = document.getElementById("dialogCopy");
+      var dialogStatus = document.getElementById("dialogStatus");
+      var lastFocus = null;
+
+      function isNoiseOn() {
+        return noisePower.getAttribute("aria-checked") === "true";
+      }
+
+      function setSwitch(button, value) {
+        button.setAttribute("aria-checked", value ? "true" : "false");
+      }
+
+      function syncNoiseControls() {
+        var on = isNoiseOn();
+        noiseCard.classList.toggle("is-off", !on);
+        leftBatteryIcon.src = on ? "assets/7fb8d.svg" : leftBatteryIcon.dataset.offSrc;
+        modeButtons.forEach(function (button) { button.disabled = !on; });
+        noiseLevel.disabled = !on;
+        noiseSlider.setAttribute("aria-disabled", on ? "false" : "true");
+        if (!on) noiseDescription.textContent = "Noise control is off.";
+        else {
+          var activeMode = modeButtons.find(function (button) { return button.getAttribute("aria-pressed") === "true"; });
+          noiseDescription.textContent = modeDescriptions[activeMode.dataset.mode];
+        }
+      }
+
+      noisePower.addEventListener("click", function () {
+        setSwitch(noisePower, !isNoiseOn());
+        syncNoiseControls();
+      });
+
+      adaptivePower.addEventListener("click", function () {
+        setSwitch(adaptivePower, adaptivePower.getAttribute("aria-checked") !== "true");
+      });
+
+      modeButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          if (!isNoiseOn()) return;
+          modeButtons.forEach(function (item) { item.setAttribute("aria-pressed", item === button ? "true" : "false"); });
+          syncModeIcons();
+          noiseDescription.textContent = modeDescriptions[button.dataset.mode];
+        });
+      });
+
+      function syncModeIcons() {
+        modeButtons.forEach(function (button) {
+          var icon = button.querySelector("img");
+          var active = button.getAttribute("aria-pressed") === "true";
+          if (button.dataset.mode === "Focus") icon.src = active ? "assets/4b681.svg" : "assets/84933.svg";
+          else icon.classList.toggle("active-light", active);
+        });
+      }
+
+      syncModeIcons();
+
+      function levelName(value) {
+        if (Number(value) < 34) return "Low";
+        if (Number(value) < 67) return "Medium";
+        return "High";
+      }
+
+      noiseLevel.addEventListener("input", function () {
+        var progress = Number(noiseLevel.value) / 100;
+        var handleLeft = 5.82 + (sliderTrack.clientWidth - 47) * progress;
+        document.getElementById("sliderKnob").style.left = handleLeft + "px";
+        document.getElementById("sliderFill").style.width = (handleLeft - 5.82 + 35) + "px";
+        if (progress > 0 && sliderTrack.dataset.state === "default") sliderTrack.dataset.state = "released";
+        noiseLevel.setAttribute("aria-valuetext", levelName(noiseLevel.value));
+      });
+
+      function releaseSlider() {
+        if (sliderTrack.dataset.state !== "active") return;
+        var snappedValue = Math.round(Number(noiseLevel.value) / 25) * 25;
+        sliderTrack.dataset.state = snappedValue === 0 ? "default" : "released";
+        if (Number(noiseLevel.value) !== snappedValue) {
+          noiseLevel.value = snappedValue;
+          noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      }
+
+      noiseLevel.addEventListener("pointerdown", function () { sliderTrack.dataset.state = "active"; });
+      noiseLevel.addEventListener("keydown", function (event) {
+        var current = Number(noiseLevel.value);
+        var next = current;
+        if (["ArrowRight", "ArrowUp", "PageUp"].indexOf(event.key) >= 0) next = Math.min(100, current + 25);
+        else if (["ArrowLeft", "ArrowDown", "PageDown"].indexOf(event.key) >= 0) next = Math.max(0, current - 25);
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = 100;
+        else return;
+        event.preventDefault();
+        sliderTrack.dataset.state = "active";
+        noiseLevel.value = next;
+        noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      window.addEventListener("pointerup", releaseSlider);
+      window.addEventListener("pointercancel", releaseSlider);
+      window.addEventListener("keyup", releaseSlider);
+      noiseLevel.addEventListener("change", releaseSlider);
+
+      function openModal(title, copy, status, trigger) {
+        lastFocus = trigger || document.activeElement;
+        dialogTitle.textContent = title;
+        dialogCopy.textContent = copy;
+        dialogStatus.textContent = status || "";
+        dialogStatus.hidden = !status;
+        modalBackdrop.hidden = false;
+        document.getElementById("closeDialog").focus();
+      }
+
+      function closeModal() {
+        if (modalBackdrop.hidden) return;
+        modalBackdrop.hidden = true;
+        if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+      }
+
+      document.querySelectorAll("[data-modal-title]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          openModal(button.dataset.modalTitle, button.dataset.modalCopy, "", button);
+        });
+      });
+
+      document.querySelectorAll(".feature-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          openModal(card.dataset.feature, card.dataset.detail, card.dataset.status, card);
+        });
+      });
+
+      document.querySelectorAll(".tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          if (tab.dataset.tab === "Home") {
+            document.getElementById("screenScroll").scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            openModal(tab.dataset.tab, "This prototype covers the PerL Pro 2 device home screen.", "", tab);
+          }
+        });
+      });
+
+      document.getElementById("closeDialog").addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", function (event) {
+        if (event.target === modalBackdrop) closeModal();
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeModal();
+      });
+
+      function fitDevice() {
+        var stage = document.getElementById("deviceStage");
+        var mobile = window.matchMedia("(max-width: 520px) and (hover: none) and (pointer: coarse)").matches;
+        if (mobile) {
+          document.documentElement.style.setProperty("--device-scale", "1");
+          stage.style.width = Math.min(375, window.innerWidth) + "px";
+          stage.style.height = window.innerHeight + "px";
+          return;
+        }
+        var scale = Math.min(1, (window.innerHeight - 24) / 1296, (window.innerWidth - 32) / 375);
+        document.documentElement.style.setProperty("--device-scale", String(Math.max(.42, scale)));
+        stage.style.width = (375 * scale) + "px";
+        stage.style.height = (1296 * scale) + "px";
+      }
+
+      window.addEventListener("resize", fitDevice);
+      fitDevice();
+      noiseLevel.dispatchEvent(new Event("input"));
+    }());
+  </script>
+</body>
+</html>
