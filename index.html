@@ -17,10 +17,9 @@
       --orange-start: #fa7250;
       --orange-end: #f63000;
       --font: "Usual", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --device-scale: 1;
       font-family: var(--font);
       color: var(--ink);
-      background: #e9ebed;
+      background: var(--surface);
       font-synthesis: none;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -31,10 +30,9 @@
     html, body { width: 100%; height: 100%; margin: 0; }
 
     body {
-      display: grid;
-      place-items: center;
+      display: block;
       overflow: hidden;
-      background: radial-gradient(ellipse at 50% 38%, #f8f9fa 0%, #e9ebed 74%);
+      background: var(--surface);
     }
 
     button, input { font: inherit; }
@@ -42,29 +40,28 @@
 
     .device-stage {
       position: relative;
-      width: 375px;
-      height: 1296px;
+      width: 100%;
+      height: 100dvh;
     }
 
     .device-shell {
       position: relative;
-      width: 375px;
-      height: 1296px;
+      width: 100%;
+      height: 100dvh;
+      min-height: 100dvh;
       overflow: hidden;
-      border-radius: 48px;
+      border-radius: 0;
       background: var(--surface);
-      box-shadow: 0 30px 90px rgba(21, 28, 35, .2), 0 4px 18px rgba(21, 28, 35, .08);
+      box-shadow: none;
       isolation: isolate;
-      transform: scale(var(--device-scale));
-      transform-origin: top left;
     }
 
     .screen-scroll {
       position: absolute;
-      inset: 0 0 114px;
+      inset: 0 0 calc(114px + env(safe-area-inset-bottom));
       overflow-x: hidden;
       overflow-y: auto;
-      padding-top: 52px;
+      padding-top: max(52px, calc(52px + env(safe-area-inset-top)));
       padding-bottom: 18px;
       scrollbar-width: none;
       overscroll-behavior: contain;
@@ -77,7 +74,8 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
-      width: 375px;
+      width: min(100%, 640px);
+      margin-inline: auto;
     }
 
     .device-title-row {
@@ -123,7 +121,8 @@
 
     .product-slot {
       position: relative;
-      width: 375px;
+      width: 100%;
+      max-width: 640px;
       height: 143px;
       overflow: hidden;
     }
@@ -205,8 +204,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 42px;
-      width: 375px;
+      gap: clamp(8px, 11.2vw, 42px);
+      width: 100%;
+      max-width: 640px;
       padding: 8px 6px;
     }
 
@@ -249,18 +249,18 @@
     .screen-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 8px;
-      width: 100%;
-      margin-top: 24px;
-      padding: 0 24px;
+      width: min(100%, 688px);
+      margin: 24px auto 0;
+      padding: 0 clamp(12px, 6.4vw, 24px);
     }
 
     .noise-card {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      width: 327px;
+      width: min(640px, 100%);
       padding: 16px 16px 20px;
       border-radius: 32px;
       background: var(--surface-soft);
@@ -281,7 +281,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 295px;
+      width: 100%;
       min-height: 48px;
       padding: 8px 0 8px 8px;
     }
@@ -338,7 +338,7 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 4px;
-      width: 295px;
+      width: 100%;
     }
 
     .mode-button {
@@ -387,13 +387,13 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: 295px;
+      width: 100%;
       padding-bottom: 16px;
     }
 
     .slider-track {
       position: relative;
-      width: 295px;
+      width: 100%;
       height: 45px;
       overflow: hidden;
       border-radius: 30px;
@@ -476,7 +476,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      width: 295px;
+      width: 100%;
       padding: 0 10px;
       color: var(--ink);
       font-size: 13px;
@@ -491,7 +491,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 295px;
+      width: 100%;
       min-height: 48px;
       padding: 8px 0 8px 8px;
     }
@@ -508,14 +508,14 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
-      width: 327px;
+      width: min(640px, 100%);
       padding-bottom: 8px;
     }
 
     .feature-card {
       display: flex;
       flex-direction: column;
-      width: 159px;
+      width: 100%;
       height: 140px;
       padding: 24px;
       border: 0;
@@ -539,7 +539,7 @@
       width: 100%;
     }
 
-    .feature-copy { display: flex; flex-direction: column; gap: 8px; width: 111px; }
+    .feature-copy { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 
     .feature-name {
       margin: 0;
@@ -554,7 +554,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      width: 111px;
+      width: 100%;
       min-height: 20px;
       margin: 0;
       overflow: hidden;
@@ -568,21 +568,21 @@
 
     .bottom-navigation {
       position: absolute;
-      right: 0;
       bottom: 0;
-      left: 0;
       z-index: 5;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       justify-content: center;
-      width: 375px;
-      height: 114px;
+      left: 50%;
+      width: min(100%, 688px);
+      height: calc(114px + env(safe-area-inset-bottom));
       border-radius: 40px 40px 0 0;
       background: rgba(255, 255, 255, .96);
       box-shadow: 0 -20px 15px rgba(145, 145, 145, .10);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
+      transform: translateX(-50%);
     }
 
     .nav-bar {
@@ -625,14 +625,14 @@
     .home-indicator-area {
       position: relative;
       width: 100%;
-      height: 34px;
+      height: calc(34px + env(safe-area-inset-bottom));
     }
 
     .home-indicator {
       position: absolute;
-      bottom: 8px;
+      bottom: calc(8px + env(safe-area-inset-bottom));
       left: 50%;
-      width: 144px;
+      width: min(144px, 45vw);
       height: 5px;
       border-radius: 100px;
       background: #000;
@@ -642,18 +642,19 @@
     .status-bar {
       position: absolute;
       top: 0;
-      left: 0;
       z-index: 6;
-      width: 375px;
-      height: 44px;
+      left: 50%;
+      width: min(100%, 688px);
+      height: calc(44px + env(safe-area-inset-top));
       background: rgba(255, 255, 255, .95);
       -webkit-backdrop-filter: blur(32px);
       backdrop-filter: blur(32px);
+      transform: translateX(-50%);
     }
 
     .status-time {
       position: absolute;
-      top: 7.33px;
+      top: calc(7.33px + env(safe-area-inset-top));
       left: 21px;
       display: grid;
       place-items: center;
@@ -668,9 +669,9 @@
     }
 
     .status-battery, .status-wifi, .status-cellular { position: absolute; display: block; max-width: none; }
-    .status-battery { top: 17.33px; right: 14.34px; }
-    .status-wifi { top: 17px; right: 43.67px; }
-    .status-cellular { top: 17px; right: 64px; }
+    .status-battery { top: calc(17.33px + env(safe-area-inset-top)); right: calc(14.34px + env(safe-area-inset-right)); }
+    .status-wifi { top: calc(17px + env(safe-area-inset-top)); right: calc(43.67px + env(safe-area-inset-right)); }
+    .status-cellular { top: calc(17px + env(safe-area-inset-top)); right: calc(64px + env(safe-area-inset-right)); }
 
     .modal-backdrop {
       position: absolute;
@@ -728,18 +729,9 @@
       cursor: pointer;
     }
 
-    @media (max-width: 520px) and (hover: none) and (pointer: coarse) {
-      body { display: block; background: var(--surface); }
-      .device-stage { width: min(375px, 100vw); height: 100dvh; transform: none; }
-      .device-shell { width: 100%; height: 100%; border-radius: min(48px, 12vw); }
-      .screen-scroll, .top-section, .product-slot, .battery-levels, .bottom-navigation,
-      .status-bar { width: 100%; }
-      .screen-wrapper { padding-right: 24px; padding-left: 24px; }
-      .noise-card, .feature-grid { width: min(327px, calc(100vw - 48px)); }
-      .section-title-row, .noise-modes, .noise-slider, .slider-track, .slider-labels, .adaptive-row { width: 100%; }
-      .feature-card { width: 100%; }
-      .battery-levels { gap: clamp(16px, 11.2vw, 42px); }
-      .status-bar { width: 100%; }
+    @media (max-width: 520px) {
+      .screen-wrapper { width: 100%; }
+      .noise-card, .feature-grid { width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1083,23 +1075,6 @@
         if (event.key === "Escape") closeModal();
       });
 
-      function fitDevice() {
-        var stage = document.getElementById("deviceStage");
-        var mobile = window.matchMedia("(max-width: 520px) and (hover: none) and (pointer: coarse)").matches;
-        if (mobile) {
-          document.documentElement.style.setProperty("--device-scale", "1");
-          stage.style.width = Math.min(375, window.innerWidth) + "px";
-          stage.style.height = window.innerHeight + "px";
-          return;
-        }
-        var scale = Math.min(1, (window.innerHeight - 24) / 1296, (window.innerWidth - 32) / 375);
-        document.documentElement.style.setProperty("--device-scale", String(Math.max(.42, scale)));
-        stage.style.width = (375 * scale) + "px";
-        stage.style.height = (1296 * scale) + "px";
-      }
-
-      window.addEventListener("resize", fitDevice);
-      fitDevice();
       noiseLevel.dispatchEvent(new Event("input"));
     }());
   </script>
