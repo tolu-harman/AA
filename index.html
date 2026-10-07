@@ -998,6 +998,33 @@
         return "High";
       }
 
+      var pointerHapticsEnabled = false;
+      var lastPointerSliderValue = null;
+
+      function sliderHaptic(pattern) {
+        if (!pointerHapticsEnabled || typeof navigator.vibrate !== "function") return;
+        try { navigator.vibrate(pattern); } catch (error) {}
+      }
+
+      function hapticAtCrossedCheckpoints(value) {
+        if (lastPointerSliderValue === null) {
+          lastPointerSliderValue = value;
+          return;
+        }
+
+        var previous = lastPointerSliderValue;
+        if (value > previous) {
+          for (var checkpoint = 25; checkpoint <= 100; checkpoint += 25) {
+            if (previous < checkpoint && value >= checkpoint) sliderHaptic(8);
+          }
+        } else if (value < previous) {
+          for (var checkpoint = 75; checkpoint >= 0; checkpoint -= 25) {
+            if (previous > checkpoint && value <= checkpoint) sliderHaptic(8);
+          }
+        }
+        lastPointerSliderValue = value;
+      }
+
       noiseLevel.addEventListener("input", function () {
         var progress = Number(noiseLevel.value) / 100;
         var handleLeft = sliderTrack.dataset.state === "active" ? 12.5 + (sliderTrack.clientWidth - 60) * progress : 5.82 + (sliderTrack.clientWidth - 47) * progress;
@@ -1005,19 +1032,27 @@
         document.getElementById("sliderFill").style.width = (handleLeft - 5.82 + 35) + "px";
         if (progress > 0 && sliderTrack.dataset.state === "default") sliderTrack.dataset.state = "released";
         noiseLevel.setAttribute("aria-valuetext", levelName(noiseLevel.value));
+        if (pointerHapticsEnabled && sliderTrack.dataset.state === "active") hapticAtCrossedCheckpoints(Number(noiseLevel.value));
       });
 
       function releaseSlider() {
         if (sliderTrack.dataset.state !== "active") return;
         var snappedValue = Math.round(Number(noiseLevel.value) / 25) * 25;
         sliderTrack.dataset.state = snappedValue === 0 ? "default" : "released";
-        if (Number(noiseLevel.value) !== snappedValue) {
-          noiseLevel.value = snappedValue;
-          noiseLevel.dispatchEvent(new Event("input", { bubbles: true })); } else { noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
-        }
+        if (Number(noiseLevel.value) !== snappedValue) noiseLevel.value = snappedValue;
+        noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
+        sliderHaptic([10, 24, 12]);
+        pointerHapticsEnabled = false;
+        lastPointerSliderValue = null;
       }
 
-      noiseLevel.addEventListener("pointerdown", function () { sliderTrack.dataset.state = "active"; noiseLevel.dispatchEvent(new Event("input", { bubbles: true })); });
+      noiseLevel.addEventListener("pointerdown", function (event) {
+        sliderTrack.dataset.state = "active";
+        pointerHapticsEnabled = event.pointerType === "touch" || event.pointerType === "pen";
+        lastPointerSliderValue = Number(noiseLevel.value);
+        sliderHaptic(8);
+        noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
+      });
       noiseLevel.addEventListener("keydown", function (event) {
         var current = Number(noiseLevel.value);
         var next = current;
