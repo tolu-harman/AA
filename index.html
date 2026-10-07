@@ -444,11 +444,17 @@
       background: #F24837;
       transform: translateY(-50%);
       pointer-events: none;
-      transition: left .24s cubic-bezier(.22, .61, .36, 1);
+      transition: left .24s cubic-bezier(.22, .61, .36, 1), transform .14s ease-out;
     }
 
     .slider-track[data-state="active"] .slider-fill,
-    .slider-track[data-state="active"] .slider-knob { transition: none; }
+    .slider-track[data-state="active"] .slider-knob {  }
+    .slider-track[data-state="active"] .slider-fill { transition: none; }
+
+    .slider-track[data-state="active"] .slider-knob {
+      transform: translateY(-50%) scale(1.1);
+      transition: transform .14s ease-out;
+    }
 
     .slider-input {
       position: absolute;
