@@ -401,7 +401,7 @@
       touch-action: pan-y;
     }
 
-    .slider-track[data-state="active"] { overflow-x: clip; overflow-y: visible; z-index: 1; } .slider-dots {
+    .slider-track[data-state="active"] { overflow: visible; z-index: 1; } .slider-dots {
       position: absolute;
       inset: 0;
       display: flex;
@@ -1000,7 +1000,7 @@
 
       noiseLevel.addEventListener("input", function () {
         var progress = Number(noiseLevel.value) / 100;
-        var handleLeft = 5.82 + (sliderTrack.clientWidth - 47) * progress;
+        var handleLeft = sliderTrack.dataset.state === "active" ? 12.5 + (sliderTrack.clientWidth - 60) * progress : 5.82 + (sliderTrack.clientWidth - 47) * progress;
         document.getElementById("sliderKnob").style.left = handleLeft + "px";
         document.getElementById("sliderFill").style.width = (handleLeft - 5.82 + 35) + "px";
         if (progress > 0 && sliderTrack.dataset.state === "default") sliderTrack.dataset.state = "released";
@@ -1013,11 +1013,11 @@
         sliderTrack.dataset.state = snappedValue === 0 ? "default" : "released";
         if (Number(noiseLevel.value) !== snappedValue) {
           noiseLevel.value = snappedValue;
-          noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
+          noiseLevel.dispatchEvent(new Event("input", { bubbles: true })); } else { noiseLevel.dispatchEvent(new Event("input", { bubbles: true }));
         }
       }
 
-      noiseLevel.addEventListener("pointerdown", function () { sliderTrack.dataset.state = "active"; });
+      noiseLevel.addEventListener("pointerdown", function () { sliderTrack.dataset.state = "active"; noiseLevel.dispatchEvent(new Event("input", { bubbles: true })); });
       noiseLevel.addEventListener("keydown", function (event) {
         var current = Number(noiseLevel.value);
         var next = current;
