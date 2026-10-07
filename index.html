@@ -401,7 +401,7 @@
       touch-action: pan-y;
     }
 
-    .slider-dots {
+    .slider-track[data-state="active"] { overflow-x: clip; overflow-y: visible; z-index: 1; } .slider-dots {
       position: absolute;
       inset: 0;
       display: flex;
@@ -452,7 +452,7 @@
     .slider-track[data-state="active"] .slider-fill { transition: none; }
 
     .slider-track[data-state="active"] .slider-knob {
-      transform: translateY(-50%) scale(1.2857142857);
+      transform: translateY(-50%) scale(1.7142857143);
       transition: transform .14s ease-out;
     }
 
