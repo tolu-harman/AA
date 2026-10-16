@@ -416,6 +416,8 @@
       max-width: none;
     }
 
+    .slider-dots img.is-covered { visibility: hidden; }
+
     .slider-fill {
       position: absolute;
       top: 50%;
@@ -934,6 +936,8 @@
       var noiseSlider = document.getElementById("noiseSlider");
       var noiseLevel = document.getElementById("noiseLevel");
       var sliderTrack = document.getElementById("sliderTrack");
+      var sliderFill = document.getElementById("sliderFill");
+      var sliderDots = sliderTrack.querySelectorAll(".slider-dots img");
       var leftBatteryIcon = document.getElementById("leftBatteryIcon");
       var modalBackdrop = document.getElementById("modalBackdrop");
       var dialogTitle = document.getElementById("dialogTitle");
@@ -998,6 +1002,15 @@
         return "High";
       }
 
+      function updateCheckpointVisibility() {
+        var fillRight = sliderFill.getBoundingClientRect().right;
+        sliderDots.forEach(function (dot) {
+          var dotBounds = dot.getBoundingClientRect();
+          var dotCenter = dotBounds.left + dotBounds.width / 2;
+          dot.classList.toggle("is-covered", dotCenter <= fillRight + 0.5);
+        });
+      }
+
       var pointerHapticsEnabled = false;
       var lastPointerSliderValue = null;
 
@@ -1030,6 +1043,7 @@
         var handleLeft = sliderTrack.dataset.state === "active" ? 12.5 + (sliderTrack.clientWidth - 60) * progress : 5.82 + (sliderTrack.clientWidth - 47) * progress;
         document.getElementById("sliderKnob").style.left = handleLeft + "px";
         document.getElementById("sliderFill").style.width = (handleLeft - 5.82 + 35) + "px";
+        updateCheckpointVisibility();
         if (progress > 0 && sliderTrack.dataset.state === "default") sliderTrack.dataset.state = "released";
         noiseLevel.setAttribute("aria-valuetext", levelName(noiseLevel.value));
         if (pointerHapticsEnabled && sliderTrack.dataset.state === "active") hapticAtCrossedCheckpoints(Number(noiseLevel.value));
