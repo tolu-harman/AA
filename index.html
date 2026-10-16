@@ -548,6 +548,21 @@
       width: 100%;
     }
 
+    .feature-icon-container {
+      display: flex;
+      flex: 0 0 32px;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .feature-icon-container .asset-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .feature-copy { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 
     .feature-name {
@@ -845,37 +860,37 @@
           <section class="feature-grid" aria-label="Device features">
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71843" data-feature="Spatial audio" data-status="Available" data-detail="Spatial audio is available on your PerL Pro 2. Explore immersive listening in a supported app.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775"></span>
                 <span class="feature-copy"><span class="feature-name">Spatial audio</span><span class="feature-status">Available</span></span>
               </span>
             </button>
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71844" data-feature="Equaliser" data-status="Unavailable" data-detail="Equaliser controls are unavailable for this connected device right now.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/a8c37.svg" alt="" data-node-id="13211:73655">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/a8c37.svg" alt="" data-node-id="13211:73655"></span>
                 <span class="feature-copy"><span class="feature-name">Equaliser</span><span class="feature-status">Unavailable <img class="asset-icon" src="assets/5a03b.svg" alt="" data-node-id="13211:73660"></span></span>
               </span>
             </button>
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71845" data-feature="Auracast" data-status="Not connected" data-detail="Connect to an Auracast broadcast to share audio with nearby compatible devices.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/a16c8.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/a16c8.svg" alt="" data-node-id="13211:73775"></span>
                 <span class="feature-copy"><span class="feature-name">Auracast</span><span class="feature-status">Not connected</span></span>
               </span>
             </button>
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71846" data-feature="Connections" data-status="Ruby’s iPhone..." data-detail="PerL Pro 2 is connected to Ruby’s iPhone. Manage paired devices from Settings.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/1460c.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/1460c.svg" alt="" data-node-id="13211:73775"></span>
                 <span class="feature-copy"><span class="feature-name">Connections</span><span class="feature-status">Ruby’s iPhone...</span></span>
               </span>
             </button>
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71847" data-feature="Touch controls" data-status="Off" data-detail="Touch controls are currently off. Turn them on in the full device settings to use touch gestures.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/295b4.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/295b4.svg" alt="" data-node-id="13211:73775"></span>
                 <span class="feature-copy"><span class="feature-name">Touch controls</span><span class="feature-status">Off</span></span>
               </span>
             </button>
             <button class="feature-card" type="button" data-node-id="I2041:34597;13708:71848" data-feature="Sleep timer" data-status="Off" data-detail="A sleep timer can pause playback after you fall asleep. The timer is currently off.">
               <span class="feature-card-inner">
-                <img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775">
+                <span class="feature-icon-container" aria-hidden="true"><img class="asset-icon" src="assets/3e015.svg" alt="" data-node-id="13211:73775"></span>
                 <span class="feature-copy"><span class="feature-name">Sleep timer</span><span class="feature-status">Off</span></span>
               </span>
             </button>
